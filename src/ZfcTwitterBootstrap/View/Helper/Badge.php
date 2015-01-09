@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZfcTwitterBootstrap
  */
@@ -10,13 +11,12 @@ use Zend\Form\View\Helper\AbstractHelper;
 /**
  * Badge
  */
-class Badge extends AbstractHelper
-{
+class Badge extends AbstractHelper {
 
     /**
      * @var string
      */
-     protected $format = <<<FORMAT
+    protected $format = <<<FORMAT
 <span class="badge %s">%s</span>
 FORMAT;
 
@@ -26,8 +26,7 @@ FORMAT;
      * @param  string $badge
      * @return string
      */
-    public function info($badge)
-    {
+    public function info($badge) {
         return $this->render($badge, 'badge-info');
     }
 
@@ -37,8 +36,7 @@ FORMAT;
      * @param  string $badge
      * @return string
      */
-    public function important($badge)
-    {
+    public function important($badge) {
         return $this->render($badge, 'badge-important');
     }
 
@@ -48,8 +46,7 @@ FORMAT;
      * @param  string $badge
      * @return string
      */
-    public function inverse($badge)
-    {
+    public function inverse($badge) {
         return $this->render($badge, 'badge-inverse');
     }
 
@@ -59,8 +56,7 @@ FORMAT;
      * @param  string $badge
      * @return string
      */
-    public function success($badge)
-    {
+    public function success($badge) {
         return $this->render($badge, 'badge-success');
     }
 
@@ -70,8 +66,7 @@ FORMAT;
      * @param  string $badge
      * @return string
      */
-    public function warning($badge)
-    {
+    public function warning($badge) {
         return $this->render($badge, 'badge-warning');
     }
 
@@ -82,8 +77,7 @@ FORMAT;
      * @param  string $class
      * @return string
      */
-    public function render($badge, $class = '')
-    {
+    public function render($badge, $class = '') {
         $class = trim($class);
 
         return sprintf($this->format, $class, $badge);
@@ -96,12 +90,12 @@ FORMAT;
      * @param  string      $class
      * @return string|self
      */
-    public function __invoke($badge = null, $class = '')
-    {
+    public function __invoke($badge = null, $class = '') {
         if ($badge) {
             return $this->render($badge, $class);
         }
 
         return $this;
     }
+
 }

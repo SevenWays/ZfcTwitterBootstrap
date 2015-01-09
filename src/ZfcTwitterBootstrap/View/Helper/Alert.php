@@ -10,15 +10,15 @@ use Zend\Form\View\Helper\AbstractHelper;
 /**
  * Alert
  */
-class Alert extends AbstractHelper
-{
+class Alert extends AbstractHelper {
 
     /**
-     * @var string
+     * @var array
      */
-     protected $format = <<<FORMAT
-<div class="alert %s"><button type="button" class="close" data-dismiss="alert">&times;</button>%s</div>
-FORMAT;
+    protected $format = array(
+        '2' => '<div class="alert %s"><button type="button" class="close" data-dismiss="alert">&times;</button>%s</div>',
+        '3' => '<div class="alert  %s  alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>%s</div>'
+    );
 
     /**
      * Display an Informational Alert
@@ -27,8 +27,7 @@ FORMAT;
      * @param  bool   $isBlock
      * @return string
      */
-    public function info($alert, $isBlock = false)
-    {
+    public function info($alert, $isBlock = false) {
         return $this->render($alert, $isBlock, 'alert-info');
     }
 
@@ -39,9 +38,13 @@ FORMAT;
      * @param  bool   $isBlock
      * @return string
      */
-    public function error($alert, $isBlock = false)
-    {
-        return $this->render($alert, $isBlock, 'alert-error');
+    public function error($alert, $isBlock = false) {
+        $class= array(
+            '2' => 'alert-error',
+            '3' => 'alert-danger'
+            );
+        
+        return $this->render($alert, $isBlock, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
@@ -51,8 +54,7 @@ FORMAT;
      * @param  bool   $isBlock
      * @return string
      */
-    public function success($alert, $isBlock = false)
-    {
+    public function success($alert, $isBlock = false) {
         return $this->render($alert, $isBlock, 'alert-success');
     }
 
@@ -63,9 +65,13 @@ FORMAT;
      * @param  bool   $isBlock
      * @return string
      */
-    public function warning($alert, $isBlock = false)
-    {
-        return $this->render($alert, $isBlock);
+    public function warning($alert, $isBlock = false) {
+         $class= array(
+            '2' => '',
+            '3' => 'alert-warning'
+            );
+        
+        return $this->render($alert, $isBlock, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
@@ -76,14 +82,13 @@ FORMAT;
      * @param  string $class
      * @return string
      */
-    public function render($alert, $isBlock = false, $class = '')
-    {
-        if ($isBlock) {
+    public function render($alert, $isBlock = false, $class = 'alert-info') {
+        if ($isBlock && TWITTER_BOOTSTRAP_VERSION == 2) {
             $class .= ' alert-block';
         }
         $class = trim($class);
 
-        return sprintf($this->format, $class, $alert);
+        return sprintf($this->format[TWITTER_BOOTSTRAP_VERSION], $class, $alert);
     }
 
     /**
@@ -94,12 +99,12 @@ FORMAT;
      * @param  string      $class
      * @return string|self
      */
-    public function __invoke($alert = null, $isBlock = false, $class = '')
-    {
+    public function __invoke($alert = null, $isBlock = false, $class = 'alert-info') {
         if ($alert) {
             return $this->render($alert, $isBlock, $class);
         }
 
         return $this;
     }
+
 }

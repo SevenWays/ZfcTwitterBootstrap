@@ -17,7 +17,7 @@ class Label extends AbstractHelper
      * @var string
      */
      protected $format = <<<FORMAT
-<span class="label %s">%s</span>
+<span class="label label-%s">%s</span>
 FORMAT;
 
     /**
@@ -28,7 +28,7 @@ FORMAT;
      */
     public function info($label)
     {
-        return $this->render($label, 'label-info');
+        return $this->render($label, 'info');
     }
 
     /**
@@ -39,18 +39,23 @@ FORMAT;
      */
     public function important($label)
     {
-        return $this->render($label, 'label-important');
+         $class= array(
+            '2' => 'important',
+            '3' => 'danger'
+            );
+        
+        return $this->render($label, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
-     * Display an Inverse Label
+     * Display an Inverse Label Bootstrap = v2
      *
      * @param  string $label
      * @return string
      */
     public function inverse($label)
     {
-        return $this->render($label, 'label-inverse');
+        return $this->render($label, 'inverse');
     }
 
     /**
@@ -61,8 +66,20 @@ FORMAT;
      */
     public function success($label)
     {
-        return $this->render($label, 'label-success');
+        return $this->render($label, 'success');
     }
+    
+      /**
+     * Display a Primary Label Bootstrap>v3.x
+     *
+     * @param  string $label
+     * @return string
+     */
+    public function primary($label)
+    {
+        return $this->render($label, 'primary');
+    }
+
 
     /**
      * Display a Warning Label
@@ -72,7 +89,7 @@ FORMAT;
      */
     public function warning($label)
     {
-        return $this->render($label, 'label-warning');
+        return $this->render($label, 'warning');
     }
 
     /**
@@ -82,7 +99,7 @@ FORMAT;
      * @param  string $class
      * @return string
      */
-    public function render($label, $class = '')
+    public function render($label, $class = 'default')
     {
         $class = trim($class);
 
@@ -96,7 +113,7 @@ FORMAT;
      * @param  string      $class
      * @return string|self
      */
-    public function __invoke($label = null, $class = '')
+    public function __invoke($label = null, $class = 'default')
     {
         if ($label) {
             return $this->render($label, $class);

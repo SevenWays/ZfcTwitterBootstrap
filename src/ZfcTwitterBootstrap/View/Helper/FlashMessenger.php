@@ -44,7 +44,8 @@ class FlashMessenger extends AbstractHelper implements ServiceLocatorAwareInterf
         PluginFlashMessenger::NAMESPACE_INFO    => 'info',
         PluginFlashMessenger::NAMESPACE_ERROR   => 'error',
         PluginFlashMessenger::NAMESPACE_SUCCESS => 'success',
-        PluginFlashMessenger::NAMESPACE_DEFAULT => 'warning',
+        PluginFlashMessenger::NAMESPACE_WARNING => 'warning',
+        PluginFlashMessenger::NAMESPACE_DEFAULT => 'default',
     );
 
     /**

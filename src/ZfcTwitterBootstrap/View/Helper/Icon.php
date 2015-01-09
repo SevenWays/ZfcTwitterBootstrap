@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZfcTwitterBootstrap
  */
@@ -9,22 +10,25 @@ use Zend\View\Helper\AbstractHelper;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\StringToLower;
-use InvalidArgumentException;
+use Exception;
 
 /**
  * Icon
  */
-class Icon extends AbstractHelper
-{
+class Icon extends AbstractHelper {
+
     /**
      * @var string
      */
     protected $color = "icon-white";
 
     /**
-     * @var string
+     * @var array
      */
-    protected $format = '<i class="%s"></i>';
+    protected $format = array(
+        '2' => '<i class="%s"></i>',
+        '3' => '<span class="glyphicon %s" aria-hidden="true"></span>'
+    );
 
     /**
      * @var array
@@ -74,8 +78,7 @@ class Icon extends AbstractHelper
      * @param  string      $color
      * @return string|self
      */
-    public function __invoke ($icon = null, $color = '')
-    {
+    public function __invoke($icon = null, $color = '') {
         if ($icon) {
             return $this->render($icon, $color);
         }
@@ -88,20 +91,19 @@ class Icon extends AbstractHelper
      *
      * @param  string                    $method
      * @param  array                     $argv
-     * @throws \InvalidArgumentException
+     * @throws \Exception
      * @return string
      */
-    public function __call($method, $argv)
-    {
+    public function __call($method, $argv) {
         $filterChain = new FilterChain();
 
         $filterChain->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
+                ->attach(new StringToLower());
 
         $icon = $filterChain->filter($method);
 
         if (!in_array($icon, $this->icons)) {
-            throw new InvalidArgumentException($icon . ' is not supported');
+            throw new Exception($icon . ' is not supported');
         }
 
         if ($argv) {
@@ -119,20 +121,23 @@ class Icon extends AbstractHelper
      * @throws Exception
      * @return string
      */
-    public function render($icon, $color = '')
-    {
+    public function render($icon, $color = '') {
         if (!in_array($icon, $this->icons)) {
             throw new Exception($icon . ' icon is not supported');
         }
 
-        $class = 'icon-' . $icon;
+        $class = array(
+            '2' => 'icon-' . $icon,
+            '3' => 'glyphicon-' . $icon,
+        );
 
-        if ($color) {
-            $class .= ' icon-white';
+        $result_class = $class[TWITTER_BOOTSTRAP_VERSION];
+        
+        if ($color && TWITTER_BOOTSTRAP_VERSION == 2) {
+            $result_class .= ' icon-white';
         }
 
-        $class = trim($class);
-
-        return sprintf($this->format, $class);
+        return sprintf($this->format[TWITTER_BOOTSTRAP_VERSION], trim($result_class));
     }
+
 }

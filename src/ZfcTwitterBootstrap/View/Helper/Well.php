@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZfcTwitterBootstrap
  */
@@ -10,8 +11,8 @@ use Zend\Form\View\Helper\AbstractHelper;
 /**
  * Well
  */
-class Well extends AbstractHelper
-{
+class Well extends AbstractHelper {
+
     /**
      * @var string
      */
@@ -24,8 +25,7 @@ class Well extends AbstractHelper
      * @param  string      $class
      * @return string|self
      */
-    public function __invoke($content = '', $class = '')
-    {
+    public function __invoke($content = '', $class = '') {
         if ($content) {
             return $this->render($content, $class);
         }
@@ -39,11 +39,12 @@ class Well extends AbstractHelper
      * @param  string $content
      * @return string
      */
-    public function large($content)
-    {
-        $class = 'well-large';
-
-        return $this->render($content, $class);
+    public function large($content) {
+        $class = array(
+            '2' => 'well-large',
+            '3' => 'well-lg'
+        );
+        return $this->render($content, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
@@ -52,11 +53,12 @@ class Well extends AbstractHelper
      * @param  string $content
      * @return string
      */
-    public function small($content)
-    {
-        $class = 'well-small';
-
-        return $this->render($content, $class);
+    public function small($content) {
+        $class = array(
+            '2' => 'well-small',
+            '3' => 'well-sm'
+        );
+        return $this->render($content, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
@@ -66,10 +68,10 @@ class Well extends AbstractHelper
      * @param  string $class
      * @return string
      */
-    public function render($content, $class = '')
-    {
+    public function render($content, $class = '') {
         $class = ' ' . trim($class);
 
         return sprintf($this->format, $class, $content);
     }
+
 }

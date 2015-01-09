@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZfcTwitterBootstrap
  */
@@ -10,8 +11,8 @@ use Zend\Form\View\Helper\AbstractHelper;
 /**
  * Image
  */
-class Image extends AbstractHelper
-{
+class Image extends AbstractHelper {
+
     /**
      * @var string
      */
@@ -23,8 +24,7 @@ class Image extends AbstractHelper
      * @param  string $src
      * @return string
      */
-    public function rounded($src)
-    {
+    public function rounded($src) {
         return $this->render($src, 'rounded');
     }
 
@@ -34,8 +34,7 @@ class Image extends AbstractHelper
      * @param  string $src
      * @return string
      */
-    public function circle($src)
-    {
+    public function circle($src) {
         return $this->render($src, 'circle');
     }
 
@@ -45,9 +44,26 @@ class Image extends AbstractHelper
      * @param  string $src
      * @return string
      */
-    public function polaroid($src)
-    {
-        return $this->render($src, 'polaroid');
+    public function polaroid($src) {
+        $class = array(
+            '2' => 'polaroid',
+            '3' => 'thumbnail'
+        );
+        return $this->render($src, $class[TWITTER_BOOTSTRAP_VERSION]);
+    }
+
+    /**
+     * Display an polariod image
+     *
+     * @param  string $src
+     * @return string
+     */
+    public function thumbnail($src) {
+        $class = array(
+            '2' => 'polaroid',
+            '3' => 'thumbnail'
+        );
+        return $this->render($src, $class[TWITTER_BOOTSTRAP_VERSION]);
     }
 
     /**
@@ -57,8 +73,7 @@ class Image extends AbstractHelper
      * @param  string $class
      * @return string
      */
-    public function render($src, $class = '')
-    {
+    public function render($src, $class = '') {
         $basePath = $this->view->plugin('basePath');
         $class = trim($class);
 
@@ -72,12 +87,12 @@ class Image extends AbstractHelper
      * @param  string      $class
      * @return string|self
      */
-    public function __invoke($src = '', $class = '')
-    {
+    public function __invoke($src = '', $class = '') {
         if ($src && $class) {
             return $this->render($src, $class);
         }
 
         return $this;
     }
+
 }
