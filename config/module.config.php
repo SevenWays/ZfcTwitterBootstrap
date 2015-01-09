@@ -15,6 +15,8 @@ return array(
             'ztblabel'           => 'ZfcTwitterBootstrap\View\Helper\Label',
             'ztbnavigation'      => 'ZfcTwitterBootstrap\View\Helper\Navigation',
             'ztbwell'            => 'ZfcTwitterBootstrap\View\Helper\Well',
+            'ztbpanel'            => 'ZfcTwitterBootstrap\View\Helper\Panel',
+            'ztbprogress'            => 'ZfcTwitterBootstrap\View\Helper\ProgressBar',
         ),
     ),
 );

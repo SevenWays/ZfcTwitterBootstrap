@@ -26,6 +26,15 @@ class Breadcrumbs extends ZendBreadcrumbs
      * @var string
      */
     protected $separator = '/';
+    
+      /**
+     * @var array
+     */
+    protected $format = array(
+        '2' => '<span class="divider">%s</span>',
+        '3' => ''
+    );
+
 
     /**
      * Returns an HTML string containing an 'a' element for the given page
@@ -57,7 +66,7 @@ class Breadcrumbs extends ZendBreadcrumbs
         }
 
         if ($hasParent) {
-            $html .= '<span class="divider">' . $this->getSeparator() . '</span>';
+            $html .= sprintf($this->format[TWITTER_BOOTSTRAP_VERSION], $this->getSeparator());
         }
         $html .= '</li>';
         return $html;

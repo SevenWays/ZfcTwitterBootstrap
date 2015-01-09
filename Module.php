@@ -1,25 +1,34 @@
 <?php
+
 /**
  * ZfcTwitterBootstrap
  */
 
 namespace ZfcTwitterBootstrap;
 
+use Zend\ModuleManager\ModuleManagerInterface;
+use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Form\View\Helper\FormElementErrors;
 
 /**
  * Module Setup
  */
-class Module implements AutoloaderProviderInterface
-{
+class Module implements InitProviderInterface,AutoloaderProviderInterface {
+
+    public function init(ModuleManagerInterface $manager) {
+        /**
+         * Set Bootstrap Version 2 or 3
+         */
+        defined('TWITTER_BOOTSTRAP_VERSION') || define('TWITTER_BOOTSTRAP_VERSION', 3);
+    }
+
     /**
      * Get Config
      *
      * @return array
      */
-    public function getConfig()
-    {
+    public function getConfig() {
         return include __DIR__ . '/config/module.config.php';
     }
 
@@ -28,8 +37,7 @@ class Module implements AutoloaderProviderInterface
      *
      * @return array
      */
-    public function getAutoloaderConfig()
-    {
+    public function getAutoloaderConfig() {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
@@ -47,8 +55,7 @@ class Module implements AutoloaderProviderInterface
      *
      * @return array
      */
-    public function getViewHelperConfig()
-    {
+    public function getViewHelperConfig() {
         return array(
             'factories' => array(
                 'formElementErrors' => function ($sm) {
@@ -62,7 +69,9 @@ class Module implements AutoloaderProviderInterface
 
                     return $fee;
                 },
-            ),
-        );
-    }
-}
+                    ),
+                );
+            }
+
+        }
+        
