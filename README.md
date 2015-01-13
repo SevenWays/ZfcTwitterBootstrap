@@ -1,7 +1,7 @@
 ZfcTwitterBootstrap
 ===================
 Zend Framework Integration with Twitter Bootstrap 2.x and 3.x
-Version 0.4.0 Powerad by Sergej Hoffmann
+Version 0.4.0 Powered by Sergej Hoffmann
 
 
 forked from https://github.com/mwillbanks/ZfcTwitterBootstrap
